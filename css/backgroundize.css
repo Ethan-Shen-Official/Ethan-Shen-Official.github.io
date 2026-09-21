@@ -1,0 +1,54 @@
+/* Set full height for base elements */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+:root {
+  --mobile-bg-image: url(../img/bg/bg.jpg);
+  --desktop-bg-image-normal: url(../img/bg/bg.jpg);
+  --desktop-bg-image-night: url(../img/bg/bg.jpg);
+}
+
+/* Background container */
+#web_bg {
+  background-image: var(--desktop-bg-image-normal);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -999; /* Higher negative z-index */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.5s;
+}
+
+/* Keep containers transparent by default */
+.container, .container-fluid, .row {
+  background-color: transparent !important;
+}
+
+/* Make only the post content area white */
+.post-content, .board {
+  background-color: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+/* Make cards white for other content */
+.card {
+  background-color: #ffffff !important;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Semi-transparent footer */
+.footer-inner {
+  background-color: rgba(255, 255, 255, 0.7);
+}
