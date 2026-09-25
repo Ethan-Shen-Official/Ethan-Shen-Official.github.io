@@ -1,0 +1,132 @@
+/* Small, native-Butterfly-friendly adjustments for header proportions. */
+#page-header.full_page {
+  height: 360px;
+}
+
+#page-header.not-home-page {
+  height: 360px;
+  background: transparent !important;
+}
+
+#page-header.not-home-page #page-site-info {
+  top: 175px;
+}
+
+#page-header.full_page #site-info {
+  top: 56%;
+}
+
+#page-header #site-title {
+  color: #273746;
+  font-size: 2.85em;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+
+#page-header #site-subtitle {
+  color: #607080;
+  font-size: 1.15em;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+
+#nav {
+  height: 64px;
+  opacity: 1;
+  padding: 0 36px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 12px rgba(30, 45, 60, 0.12);
+}
+
+#nav #blog-info,
+#nav .site-name,
+#nav a,
+#nav span.site-page {
+  color: #273746;
+  text-shadow: none;
+}
+
+#nav a:hover,
+#nav span.site-page:hover {
+  color: #2f6f8f;
+}
+
+#nav .site-icon {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#footer {
+  background: rgba(255, 255, 255, 0.72) !important;
+  color: #718096;
+  min-height: 0;
+}
+
+#footer a {
+  color: #718096;
+}
+
+#footer .footer-other {
+  padding: 14px 20px;
+}
+
+#footer .framework-info {
+  font-size: 1em;
+}
+
+.announcement-bad-apple {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 240px;
+}
+
+#pure-background-btn {
+  cursor: pointer;
+}
+
+body.pure-background-mode #content-inner,
+body.pure-background-mode #footer {
+  display: none;
+}
+
+body.pure-background-mode #page-header {
+  min-height: 100vh;
+  height: 100vh;
+}
+
+body.pure-background-mode #page-header #page-site-info {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #page-header.full_page {
+    height: 320px;
+  }
+
+  #page-header.not-home-page {
+    height: 320px;
+  }
+
+  #page-header.full_page #site-info {
+    top: 58%;
+  }
+
+  #page-header.not-home-page #page-site-info {
+    top: 145px;
+  }
+
+  #page-header #site-title {
+    font-size: 2.2em;
+  }
+
+  #page-header #site-subtitle {
+    font-size: 1em;
+  }
+
+  #nav {
+    padding: 0 16px;
+  }
+}
