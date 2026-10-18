@@ -1,34 +1,17 @@
 /* Small, native-Butterfly-friendly adjustments for header proportions. */
-#page-header.full_page {
-  height: 360px;
-}
 
-#page-header.not-home-page {
-  height: 360px;
-  background: transparent !important;
-}
+/* No cover page: this site never renders top_img / the full_page hero, so
+   the top of every page is only the nav bar. All rules for #page-header
+   .full_page / .not-home-page and #site-info / #site-title / #site-subtitle
+   were removed with it.
 
-#page-header.not-home-page #page-site-info {
-  top: 175px;
-}
-
-#page-header.full_page #site-info {
-  top: 56%;
-}
-
-#page-header #site-title {
-  color: #273746;
-  font-size: 2.85em;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-shadow: none;
-}
-
-#page-header #site-subtitle {
-  color: #607080;
-  font-size: 1.15em;
-  letter-spacing: 0;
-  text-shadow: none;
+   Page-open animations are gone at the source: `enter_transitions: false`
+   in _config.butterfly.yml stops the theme from emitting header-effect /
+   bottom-top / titleScale at all. Transitions stay untouched on purpose so
+   hover, scroll and the rightside rail keep animating smoothly. */
+#page-header.not-top-img {
+  height: 64px;
+  min-height: 0;
 }
 
 #nav {
@@ -57,22 +40,21 @@
   object-fit: cover;
 }
 
+/* Subtitle rendered into the nav bar by /js/nav-subtitle.js. */
+#nav .nav-subtitle {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(39, 55, 70, 0.24);
+  color: #7d8b99;
+  font-size: 0.72em;
+  font-weight: 400;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Footer removed: no framework attribution strip at the bottom of any page. */
 #footer {
-  background: rgba(255, 255, 255, 0.72) !important;
-  color: #718096;
-  min-height: 0;
-}
-
-#footer a {
-  color: #718096;
-}
-
-#footer .footer-other {
-  padding: 14px 20px;
-}
-
-#footer .framework-info {
-  font-size: 1em;
+  display: none !important;
 }
 
 .announcement-bad-apple {
@@ -87,46 +69,81 @@
   cursor: pointer;
 }
 
-body.pure-background-mode #content-inner,
-body.pure-background-mode #footer {
+/* Keep post navigation disabled even if an older generated page is cached. */
+#pagination.pagination-post {
+  display: none !important;
+}
+
+/* Keep the author/sidebar counters focused on articles and categories. */
+#sidebar .site-data a[href$="/tags/"],
+#aside-content .card-info .site-data a[href$="/tags/"] {
   display: none;
 }
 
-body.pure-background-mode #page-header {
-  min-height: 100vh;
-  height: 100vh;
+/* Pure background mode: hide the page, keep the wallpaper and the floating
+   rail. The rail is forced into view because the theme only reveals it after
+   the first scroll, and here there is nothing left to scroll. */
+body.pure-background-mode {
+  overflow: hidden !important;
 }
 
-body.pure-background-mode #page-header #page-site-info {
-  display: none;
+/* These are never visible anyway, so they keep the hard hide. */
+body.pure-background-mode #footer,
+body.pure-background-mode #sidebar,
+body.pure-background-mode #menu-mask {
+  display: none !important;
+}
+
+/* The page fades out / emerges back instead of snapping. Only opacity is
+   animated: it stays on the compositor (no reflow, no jank) and - unlike
+   transform or filter - it does not create a containing block, so the fixed
+   #nav keeps its position. visibility is deferred on the way out so the
+   faded page stops catching clicks, and applies immediately on the way in. */
+#page-header,
+#content-inner {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease, visibility 0s linear;
+}
+
+body.pure-background-mode #page-header,
+body.pure-background-mode #content-inner {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+}
+
+/* Wallpaper treatment follows the active theme:
+   - light theme: the wallpaper as it is, without any scrim
+   - dark theme: keep a dimming layer, so entering pure background is not a
+     sudden full-brightness screen (0.7 is what the theme uses for the normal
+     dark page; 0.45 keeps the artwork readable). */
+body.pure-background-mode #web_bg::before {
+  display: none !important;
+}
+
+[data-theme='dark'] #web_bg::before {
+  transition: background-color 0.45s ease;
+}
+
+[data-theme='dark'] body.pure-background-mode #web_bg::before {
+  display: block !important;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+body.pure-background-mode #rightside {
+  opacity: 1 !important;
+  transform: translate(-58px, 0) !important;
 }
 
 @media (max-width: 768px) {
-  #page-header.full_page {
-    height: 320px;
-  }
-
-  #page-header.not-home-page {
-    height: 320px;
-  }
-
-  #page-header.full_page #site-info {
-    top: 58%;
-  }
-
-  #page-header.not-home-page #page-site-info {
-    top: 145px;
-  }
-
-  #page-header #site-title {
-    font-size: 2.2em;
-  }
-
-  #page-header #site-subtitle {
-    font-size: 1em;
-  }
-
   #nav {
     padding: 0 16px;
+  }
+
+  /* No room for the subtitle next to the title on small screens. */
+  #nav .nav-subtitle {
+    display: none;
   }
 }
